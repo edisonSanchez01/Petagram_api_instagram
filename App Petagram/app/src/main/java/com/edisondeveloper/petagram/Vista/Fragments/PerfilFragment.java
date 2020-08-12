@@ -9,16 +9,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.edisondeveloper.petagram.Modelo.Adapters.PerfilAdapter;
-import com.edisondeveloper.petagram.Modelo.PerfilMascota;
+import com.edisondeveloper.petagram.Modelo.Constantes;
+import com.edisondeveloper.petagram.Modelo.MediaUser;
+import com.edisondeveloper.petagram.Presentador.PerfilFragment.PerfilFragmentPresenter;
 import com.edisondeveloper.petagram.R;
 
 import java.util.ArrayList;
 
-public class PerfilFragment extends Fragment {
+public class PerfilFragment extends Fragment implements IPerfilFragmentView {
 
     private RecyclerView recyclerView;
+    private TextView namePerfil;
+    private PerfilFragmentPresenter perfilFragmentPresenter;
 
     public PerfilFragment() {}
 
@@ -26,22 +31,24 @@ public class PerfilFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.perfil_fragment, container, false);
-        ArrayList<PerfilMascota> list = new ArrayList<>();
-        list.add(new PerfilMascota(R.drawable.matias01, 5));
-        list.add(new PerfilMascota(R.drawable.matias02, 4));
-        list.add(new PerfilMascota(R.drawable.matias03, 7));
-        list.add(new PerfilMascota(R.drawable.matias04, 9));
-        list.add(new PerfilMascota(R.drawable.matias05, 14));
-        list.add(new PerfilMascota(R.drawable.matias06, 10));
-        list.add(new PerfilMascota(R.drawable.matias07, 3));
-        list.add(new PerfilMascota(R.drawable.matias08, 19));
-        list.add(new PerfilMascota(R.drawable.matias09, 2));
         recyclerView = view.findViewById(R.id.recyclerViewPerfil);
-        recyclerView.setHasFixedSize(true);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        namePerfil = view.findViewById(R.id.name_perfil);
+        namePerfil.setText(Constantes.getNameUser(getActivity()));
+        perfilFragmentPresenter = new PerfilFragmentPresenter(getActivity(), this);
+        perfilFragmentPresenter.consumeServiceWeb();
+        return view;
+    }
+
+    @Override
+    public void generarGridLayout() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
+    }
+
+    @Override
+    public void configAdapter(ArrayList<MediaUser> list) {
+        recyclerView.setHasFixedSize(true);
         PerfilAdapter adapter = new PerfilAdapter(getActivity(), list);
         recyclerView.setAdapter(adapter);
-        return view;
     }
 }

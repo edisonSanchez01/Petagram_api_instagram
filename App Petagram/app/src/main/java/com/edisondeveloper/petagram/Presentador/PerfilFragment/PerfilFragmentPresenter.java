@@ -8,6 +8,7 @@ import com.edisondeveloper.petagram.Modelo.EndPointsApi;
 import com.edisondeveloper.petagram.Modelo.MediaDeserializador;
 import com.edisondeveloper.petagram.Modelo.MediaResponse;
 import com.edisondeveloper.petagram.Modelo.MediaUser;
+import com.edisondeveloper.petagram.Vista.Fragments.IPerfilFragmentView;
 import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
@@ -19,11 +20,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PerfilFragmentPresenter {
 
     private Context context;
-    private IPerfilFragmentPresenter iPerfilFragmentPresenter;
+    private IPerfilFragmentView iPerfilFragmentView;
 
-    public PerfilFragmentPresenter(Context context, IPerfilFragmentPresenter iPerfilFragmentPresenter) {
+    public PerfilFragmentPresenter(Context context, IPerfilFragmentView iPerfilFragmentView) {
         this.context = context;
-        this.iPerfilFragmentPresenter = iPerfilFragmentPresenter;
+        this.iPerfilFragmentView = iPerfilFragmentView;
     }
 
     public void consumeServiceWeb(){
@@ -39,7 +40,8 @@ public class PerfilFragmentPresenter {
             @Override
             public void onResponse(Call<MediaResponse> call, Response<MediaResponse> response) {
                 MediaResponse mediaResponse = response.body();
-
+                iPerfilFragmentView.generarGridLayout();
+                iPerfilFragmentView.configAdapter(mediaResponse.getListMediaUser());
             }
 
             @Override

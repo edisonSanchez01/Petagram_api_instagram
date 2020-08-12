@@ -13,7 +13,6 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        getSh
         Toolbar actionBar = findViewById(R.id.action_bar);
         setSupportActionBar(actionBar);
         if(getSupportActionBar() != null){
