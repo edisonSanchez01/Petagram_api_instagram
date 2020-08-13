@@ -28,6 +28,7 @@ public class ConfigPerfilActivity extends AppCompatActivity implements IConfigPe
         Toolbar actionBar = findViewById(R.id.action_bar);
         setSupportActionBar(actionBar);
         if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.button_back);
         }
